@@ -44,17 +44,6 @@ const Approve = ({ record, handleClose }) => {
 	const [successMessage, setSuccessMessage] = useState();
 	const [errorMessage, setErrorMessage] = useState();
 
-	const getTeam = async () => {
-		try {
-			const { data } = await fetchContext.authAxios.get(
-				`/teams/${record?.title}`
-			);
-			setRecords(data[0]);
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
 	const approveReq = async (values, resetForm) => {
 		try {
 			setLoading(true);
@@ -78,6 +67,16 @@ const Approve = ({ record, handleClose }) => {
 	};
 
 	useEffect(() => {
+		const getTeam = async () => {
+			try {
+				const { data } = await fetchContext.authAxios.get(
+					`/teams/${record?.title}`
+				);
+				setRecords(data[0]);
+			} catch (error) {
+				console.log(error);
+			}
+		};
 		getTeam();
 		// return () => {
 		// 	second;

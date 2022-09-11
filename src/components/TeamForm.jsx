@@ -7,7 +7,6 @@ import {
 } from '@mui/material';
 import { Form, Formik, useField } from 'formik';
 import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
 import { FetchContext } from '../context/FetchContext';
 import CustomButton from './common/CustomButton';
 import { teamSchema } from '../schema/schema';
@@ -35,7 +34,6 @@ const MemberSelection = ({ name, ...props }) => {
 
 const TeamForm = ({ type, team, handleClose }) => {
 	const fetchContext = useContext(FetchContext);
-	const authContext = useContext(AuthContext);
 	const [success, setSuccess] = useState(false);
 	const [successMessage, setSuccessMessage] = useState();
 	const [loading, setLoading] = useState(false);
@@ -47,15 +45,6 @@ const TeamForm = ({ type, team, handleClose }) => {
 				return item._id === item2._id;
 			});
 		});
-	};
-
-	const getAdminUsers = async () => {
-		try {
-			const { data } = await fetchContext.authAxios.get('/users/admins');
-			setRecords(data);
-		} catch (error) {
-			console.log(error);
-		}
 	};
 
 	const createTeam = async (values, resetForm) => {
@@ -73,6 +62,14 @@ const TeamForm = ({ type, team, handleClose }) => {
 	};
 
 	useEffect(() => {
+		const getAdminUsers = async () => {
+			try {
+				const { data } = await fetchContext.authAxios.get('/users/admins');
+				setRecords(data);
+			} catch (error) {
+				console.log(error);
+			}
+		};
 		getAdminUsers();
 
 		//   return () => {
