@@ -39,6 +39,15 @@ const TeamForm = ({ type, team, handleClose }) => {
 	const [loading, setLoading] = useState(false);
 	const [records, setRecords] = useState([]);
 
+	const getAdminUsers = async () => {
+		try {
+			const { data } = await fetchContext.authAxios.get('/users/admins');
+			setRecords(data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const getDifference = (arr1, arr2) => {
 		return arr1.filter((item) => {
 			return !arr2.some((item2) => {
@@ -62,19 +71,12 @@ const TeamForm = ({ type, team, handleClose }) => {
 	};
 
 	useEffect(() => {
-		const getAdminUsers = async () => {
-			try {
-				const { data } = await fetchContext.authAxios.get('/users/admins');
-				setRecords(data);
-			} catch (error) {
-				console.log(error);
-			}
-		};
 		getAdminUsers();
 
 		//   return () => {
 		// 	second
 		//   }
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
