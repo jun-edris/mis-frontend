@@ -38,6 +38,7 @@ const Login = () => {
 		try {
 			setLoading(true);
 			const { data } = await publicFetch.post(`/login`, values);
+			cookies.set('token', data.token);
 			authContext.setAuthState(data);
 			setSuccessMessage(data.message);
 			setSuccess(true);

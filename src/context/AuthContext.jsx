@@ -13,7 +13,6 @@ const AuthProvider = ({ children }) => {
 	});
 
 	const [authState, setAuthState] = useState({
-		token: null,
 		expiresAt,
 		userInfo: userInfo ? JSON.parse(userInfo) : {},
 	});
